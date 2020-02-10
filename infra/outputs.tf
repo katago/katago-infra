@@ -1,6 +1,6 @@
 # remote state output
 output "data_out" {
-  value = data.terraform_remote_state.project_id.outputs.project_id
+  value = data.terraform_remote_state.project.outputs.project_id
 }
 
 # network VPC output
@@ -22,8 +22,14 @@ output "master_instance_sql_ipv4" {
 }
 
 # GKE outputs
-output "endpoint" {
+output "gke_endpoint" {
   value       = module.gke.endpoint
   description = "Endpoint for accessing the master node"
 }
+
+output "gke_auth" {
+  value       = module.gke.auth
+  description = "Auth for accessing the master node"
+}
+
 

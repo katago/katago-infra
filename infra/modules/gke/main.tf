@@ -24,8 +24,8 @@ resource "google_container_cluster" "primary" {
   }
 
   master_auth {
-    username = var.gke_master_user
-    password = var.gke_master_pass
+    username = ""
+    password = ""
   }
 }
 

@@ -3,6 +3,10 @@ variable "region" {
   description = "Region of resources"
 }
 
+variable "bucket_name" {
+  description = "Name of the google storage bucket"
+}
+
 variable "project_name" {
   default = {
     prod = "katago-server-prod"
