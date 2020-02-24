@@ -18,6 +18,7 @@ locals {
     "deploymentmanager.googleapis.com",
     "dns.googleapis.com",
     "logging.googleapis.com",
+    "servicenetworking.googleapis.com",
     "monitoring.googleapis.com",
     "oslogin.googleapis.com",
     "pubsub.googleapis.com",

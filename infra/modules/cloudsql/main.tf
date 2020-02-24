@@ -5,7 +5,28 @@ resource "random_id" "master" {
   prefix      = "katago-server-${terraform.workspace}-"
 }
 
+resource "google_compute_global_address" "private_ip" {
+  provider = google-beta
+
+  project = var.project
+
+  name          = "db-private-ip"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = var.vpc
+}
+
+resource "google_service_networking_connection" "db_vpc_connection" {
+  network                 = var.vpc
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_ip.name]
+}
+
+
 resource "google_sql_database_instance" "master" {
+  depends_on = [google_service_networking_connection.db_vpc_connection]
+
   name             = "${random_id.master.hex}-lead"
   region           = var.region
   database_version = "POSTGRES_11"
@@ -20,12 +41,9 @@ resource "google_sql_database_instance" "master" {
     disk_autoresize   = true
 
     ip_configuration {
-      authorized_networks {
-        value = "0.0.0.0/0"
-      }
-
-      require_ssl  = var.sql_require_ssl
-      ipv4_enabled = true
+      private_network = var.vpc
+      require_ssl     = true
+      ipv4_enabled    = false
     }
 
     location_preference {

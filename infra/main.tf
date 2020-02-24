@@ -5,11 +5,13 @@ module "vpc" {
 }
 
 module "subnet" {
-  source      = "./modules/network/subnet"
-  project     = data.terraform_remote_state.project.outputs.project_id
-  region      = var.region
-  vpc_name    = module.vpc.vpc_name
-  subnet_cidr = var.subnet_cidr
+  source               = "./modules/network/subnet"
+  project              = data.terraform_remote_state.project.outputs.project_id
+  region               = var.region
+  vpc_name             = module.vpc.vpc_name
+  subnet_ip_cidr       = var.subnet_ip_cidr
+  subnet_pods_cidr     = var.subnet_pods_cidr
+  subnet_services_cidr = var.subnet_services_cidr
 }
 
 module "firewall" {
@@ -20,14 +22,16 @@ module "firewall" {
 }
 
 module "cloudsql" {
-  source                     = "./modules/cloudsql"
-  project                    = data.terraform_remote_state.project.outputs.project_id
-  region                     = var.region
-  availability_type          = var.availability_type
+  source            = "./modules/cloudsql"
+  project           = data.terraform_remote_state.project.outputs.project_id
+  region            = var.region
+  availability_type = var.availability_type
+
+  vpc = module.vpc.self_link
+
   sql_instance_size          = var.sql_instance_size
   sql_disk_type              = var.sql_disk_type
   sql_disk_size              = var.sql_disk_size
-  sql_require_ssl            = var.sql_require_ssl
   sql_master_zone            = var.sql_master_zone
   sql_connect_retry_interval = var.sql_connect_retry_interval
   sql_replica_zone           = var.sql_replica_zone

@@ -20,12 +20,18 @@ variable "name" {
 
 # Network variables
 
-variable "subnet_cidr" {
-  default = {
-    prod = "10.10.0.0/24"
-    dev  = "10.240.0.0/24"
-  }
+variable "subnet_ip_cidr" {
+  default     = "10.0.0.0/16"
+  description = "Subnet range"
+}
 
+variable "subnet_pods_cidr" {
+  default     = "10.1.0.0/16"
+  description = "Subnet range"
+}
+
+variable "subnet_services_cidr" {
+  default     = "10.2.0.0/16"
   description = "Subnet range"
 }
 
@@ -53,11 +59,6 @@ variable "sql_disk_type" {
 variable "sql_disk_size" {
   default     = "10"
   description = "Storage size in GB"
-}
-
-variable "sql_require_ssl" {
-  default     = "false"
-  description = "Enforce SSL connections"
 }
 
 variable "sql_master_zone" {

@@ -6,8 +6,18 @@ variable "vpc_name" {
   description = "Netwrok name"
 }
 
-variable "subnet_cidr" {
-  type        = map(string)
+variable "subnet_ip_cidr" {
+  type        = string
+  description = "Subnet range"
+}
+
+variable "subnet_pods_cidr" {
+  type        = string
+  description = "Subnet range"
+}
+
+variable "subnet_services_cidr" {
+  type        = string
   description = "Subnet range"
 }
 

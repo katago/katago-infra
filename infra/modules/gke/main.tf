@@ -11,6 +11,10 @@ resource "google_container_cluster" "primary" {
   network    = var.vpc_name
   subnetwork = var.subnet_name
 
+  ip_allocation_policy {
+    cluster_secondary_range_name  = "pods"
+    services_secondary_range_name = "services"
+  }
 
 
   addons_config {

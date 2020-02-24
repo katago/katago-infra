@@ -9,6 +9,11 @@ variable "project" {
 
 # Cloud SQL variables
 
+variable "vpc" {
+  type        = string
+  description = "VPC"
+}
+
 variable "availability_type" {
   type        = map(string)
   description = "Availability type for HA"
@@ -24,10 +29,6 @@ variable "sql_disk_type" {
 
 variable "sql_disk_size" {
   description = "Storage size in GB"
-}
-
-variable "sql_require_ssl" {
-  description = "Enforce SSL connections"
 }
 
 variable "sql_connect_retry_interval" {
