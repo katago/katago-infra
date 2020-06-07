@@ -29,7 +29,7 @@ resource "google_sql_database_instance" "master" {
 
   name             = "${random_id.master.hex}-lead"
   region           = var.region
-  database_version = "POSTGRES_11"
+  database_version = "POSTGRES_12"
 
   project = var.project
 
@@ -73,7 +73,7 @@ resource "google_sql_database_instance" "replica" {
   master_instance_name = google_sql_database_instance.master.name
 
   settings {
-    tier            = var.sql_instance_size
+    tier            = var.sql_instance_size[terraform.workspace]
     disk_type       = var.sql_disk_type
     disk_size       = var.sql_disk_size
     disk_autoresize = true

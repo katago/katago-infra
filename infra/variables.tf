@@ -47,7 +47,10 @@ variable "availability_type" {
 }
 
 variable "sql_instance_size" {
-  default     = "db-f1-micro"
+  default = {
+    prod = "db-g1-small"
+    dev  = "db-f1-micro"
+  }
   description = "Size of Cloud SQL instances"
 }
 
@@ -57,7 +60,7 @@ variable "sql_disk_type" {
 }
 
 variable "sql_disk_size" {
-  default     = "10"
+  default     = "40"
   description = "Storage size in GB"
 }
 
@@ -88,12 +91,12 @@ variable "sql_pass" {
 # GKE variables
 
 variable "min_master_version" {
-  default     = "1.15.7-gke.23"
+  default     = "1.17.5-gke.9"
   description = "Number of nodes in each GKE cluster zone"
 }
 
 variable "node_version" {
-  default     = "1.15.7-gke.23"
+  default     = "1.17.5-gke.9"
   description = "Number of nodes in each GKE cluster zone"
 }
 
@@ -107,7 +110,10 @@ variable "gke_num_nodes" {
 }
 
 variable "gke_node_machine_type" {
-  default     = "n1-standard-1"
+  default = {
+    prod = "n2-standard-2"
+    dev  = "n1-standard-1"
+  }
   description = "Machine type of GKE nodes"
 }
 

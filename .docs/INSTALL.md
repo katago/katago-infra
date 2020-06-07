@@ -15,7 +15,7 @@ gcloud init
 ## GCloud admin project
 
 > The goal is is to create a "root" project and a service account.
-From that project, Terraform will be able to create the actual project and resources.
+> From that project, Terraform will be able to create the actual project and resources.
 
 ⚠ This guide implies that you have an organisation access to gcloud resources ⚠
 
@@ -58,6 +58,14 @@ gcloud iam service-accounts keys create ./.credentials/terraform-credentials.jso
 --iam-account terraform@<PROJECT_ADMIN>.iam.gserviceaccount.com
 ```
 
+Change your environment so terrafrom knows how to pick up the credentials:
+
+Windows(PS):
+
+```powershell
+$Env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\tycho\Documents\code\katago_infra\.credentials\terraform-credentials.json"
+```
+
 ### Grant permissions for project
 
 ```bash
@@ -80,4 +88,27 @@ gcloud services enable container.googleapis.com
 
 ```bash
 gcloud organizations add-iam-policy-binding <ORG_ID> --member serviceAccount:terraform@<PROJECT_ADMIN>.iam.gserviceaccount.com --role roles/resourcemanager.projectCreator
+```
+
+## Terraform
+
+Start by creating a project:
+
+```bash
+cd project
+terraform init
+terraform workspace new prod
+terraform plan -out prod.tfplan
+terrafom apply prod.tfplan
+cd ..
+```
+
+Then setup the infrastructure:
+
+```bash
+cd infra
+terraform init
+terraform workspace new prod
+terraform plan -out prod.tfplan
+terrafom apply prod.tfplan
 ```

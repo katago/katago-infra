@@ -1,10 +1,10 @@
 provider "google" {
-  version = "3.7.0"
+  version = "3.24.0"
   region  = var.region
 }
 
 provider "google-beta" {
-  version = "3.7.0"
+  version = "3.24.0"
   region  = var.region
 }
 

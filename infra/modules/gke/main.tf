@@ -64,7 +64,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     }
 
     disk_size_gb = 10
-    machine_type = var.gke_node_machine_type
+    machine_type = var.gke_node_machine_type[terraform.workspace]
     tags         = ["gke-node"]
   }
 }
